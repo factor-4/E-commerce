@@ -1,6 +1,7 @@
 package com.example.e_commerce.service;
 
 import com.example.e_commerce.dto.CartItemRequest;
+import com.example.e_commerce.dto.CartItemResponse;
 import com.example.e_commerce.model.CartItem;
 import com.example.e_commerce.model.Product;
 import com.example.e_commerce.model.User;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -69,6 +71,16 @@ public class CartService {
 
         return false;
 
+
+    }
+
+
+    public List<CartItem> getCart(String userId) {
+
+
+        return userRepository.findById(Long.valueOf(userId))
+                .map(cartItemRepository::findByUser)
+                .orElseGet(List::of);
 
     }
 }
